@@ -1,13 +1,50 @@
 fn trim_me(input: &str) -> &str {
     // TODO: Remove whitespace from both ends of a string.
+    let mut first_index: usize = 0;
+    let mut last_index: usize = input.len();
+
+    for (i, char) in input.as_bytes().iter().enumerate() {
+        if char != &b' ' {
+            first_index = i;
+            break;
+        }
+    }
+
+    for (i, char) in input.as_bytes().iter().enumerate().rev() {
+        if char != &b' ' {
+            last_index = i + 1;
+            break;
+        }
+    }
+
+    &input[first_index..last_index]
 }
 
 fn compose_me(input: &str) -> String {
     // TODO: Add " world!" to the string! There are multiple ways to do this.
+    let mut composed = String::from(input);
+    composed.push_str(" world!");
+    composed
 }
 
 fn replace_me(input: &str) -> String {
     // TODO: Replace "cars" in the string with "balloons".
+    let mut replaced_string = String::new();
+    let mut is_cars = false;
+    for (i, char) in input.bytes().enumerate() {
+        if char == b'c' {
+            is_cars = &input[i..i + 4] == "cars";
+        }
+
+        if is_cars {
+            replaced_string = String::from(&input[..i]);
+            replaced_string.push_str("balloons");
+            replaced_string.push_str(&input[i + 4..]);
+            break;
+        }
+    }
+
+    replaced_string
 }
 
 fn main() {
